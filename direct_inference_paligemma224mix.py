@@ -34,6 +34,7 @@ from progressbar import ProgressBar
 
 access_token = "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" 
 
+#model_id = "google/paligemma-3b-pt-224"
 model_id = "google/paligemma-3b-mix-224"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 dtype = torch.bfloat16
@@ -108,29 +109,34 @@ if __name__=='__main__':
 
      
     
-    captions = [] #lista para guardar todos los captions
     #imagen_path = '/home/mitos/Documentos/AVANCE JULIO/exponiendo.jpg'
-    imagen_path = "https://upload.wikimedia.org/wikipedia/commons/7/7a/Limpieza_de_ventanas_en_la_calle_Peter%27s_Hill%2C_Londres%2C_Inglaterra%2C_2014-08-11%2C_DD_128.JPG"
+    imagen_path = "https://estaticosgn-cdn.deia.eus/clip/37ef816f-bb07-46b0-8c6d-6887ba5b8ee6_16-9-discover-aspect-ratio_default_0.jpg"
     
             
     #se descarga en catche la imagen
     image = load_image(imagen_path)
     print("pasa3")
 
-    prompt = "What does this image show?"
-    model_inputs = image_processor(text=prompt, images=image, return_tensors="pt").to(model.device)
-    input_len = model_inputs["input_ids"].shape[-1]
+    cont = 0
 
-    print("pasa4")
-    with torch.inference_mode():
-        generation = model.generate(**model_inputs, repetition_penalty=1.10, max_new_tokens=256, do_sample=False)
-        generation = generation[0][input_len:]
-        decoded = image_processor.decode(generation, skip_special_tokens=True)
-        CAPTION = decoded  
-        #CAPTION = get_caption(model, image_processor, tokenizer, imagen_path)
-        captions.append(CAPTION)
+    while cont<=10:
+        prompt = input("How can i help you?: ")
+        if prompt == "exit":
+            cont = 10
 
-    print(captions)
+        model_inputs = image_processor(text=prompt, images=image, return_tensors="pt").to(model.device)
+        input_len = model_inputs["input_ids"].shape[-1]
+
+        with torch.inference_mode():
+            generation = model.generate(**model_inputs, repetition_penalty=1.10, max_new_tokens=256, do_sample=False)
+            generation = generation[0][input_len:]
+            decoded = image_processor.decode(generation, skip_special_tokens=True)
+            CAPTION = decoded  
+            
+        cont += 1
+        print(CAPTION)
+        
+        
     
     
     print("FIN")
