@@ -44,7 +44,7 @@ def load_model():
     dtype = torch.bfloat16
 
     # Aquí debes crear un token en Hugging Face para usar el modelo preentrenado
-    access_token = "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"
+    access_token = "token create in hugging face"
     model_id = "google/paligemma-3b-mix-224"
 
     # Cargar el modelo en el dispositivo adecuado
