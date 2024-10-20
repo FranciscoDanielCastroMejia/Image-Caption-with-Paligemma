@@ -32,7 +32,7 @@ from progressbar import ProgressBar
 
 #Here you have to create a token in hugging face to use the pre trained model 
 
-access_token = "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" 
+access_token = "your token created in hugging face" 
 
 #model_id = "google/paligemma-3b-pt-224"
 model_id = "google/paligemma-3b-mix-224"
