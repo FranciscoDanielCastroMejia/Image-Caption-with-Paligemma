@@ -114,7 +114,9 @@ if __name__== '__main__':
     main()
 
 ```
-
+--- 
+### Result
+![This is how the GUI looks](example_image.png)
 
 
 
